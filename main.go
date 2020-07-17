@@ -2,13 +2,32 @@ package main
 
 import (
 	"github.com/yofr4nk/s3-chunked-upload-builder/pkg/http/rest"
+	"github.com/yofr4nk/s3-chunked-upload-builder/pkg/loading"
+	"github.com/yofr4nk/s3-chunked-upload-builder/pkg/storage/s3"
+	"github.com/yofr4nk/s3-chunked-upload-builder/pkg/uploading"
 	"log"
 	"net/http"
 	"os"
 )
 
 func main() {
-	r := rest.RouterHandler()
+	envKeys, err := loading.GetEnvironmentKeys()
+	if err != nil {
+		log.Fatal(err)
+
+		return
+	}
+
+	mediaStorage, err := s3.NewUploadStorage(envKeys.AwsAccessKey, envKeys.AwsSecretKey, envKeys.Bucket, envKeys.Region)
+	if err != nil {
+		log.Fatal(err)
+
+		return
+	}
+
+	uploadFileService := uploading.NewUploadFileService(mediaStorage)
+
+	r := rest.RouterHandler(uploadFileService)
 
 	PORT := os.Getenv("PORT")
 
