@@ -1,0 +1,6 @@
+github.com/gorilla/mux v1.7.4 h1:VuZ8uybHlWmqV03+zRzdwKL4tUnIp1MAQtp1mIFE1bc=
+github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
+github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=
+github.com/yofr4nk/aws-signed-request-sigv4 v0.0.1-beta.1 h1:cGg4yv5bJBEcqUfrXD3KPFbCM4hktItW6R5NwPXoimo=
+github.com/yofr4nk/aws-signed-request-sigv4 v0.0.1-beta.1/go.mod h1:3j98VKwS/2pgpjTjdB4VhfcnOsIBlgvnLD/4QICjvQI=
