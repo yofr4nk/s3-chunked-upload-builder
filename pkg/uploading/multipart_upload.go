@@ -7,6 +7,7 @@ import (
 type UploadFileRepository interface {
 	CreateMultipartUpload(filePathName string, contentType string) (domain.MultipartPayload, error)
 	AbortMultipartUpload(filePathName string, uploadId string) error
+	CompleteMultipartUpload(completedMultipartInput domain.MultipartCompletedInput) (string, error)
 }
 
 type UploadFileService struct {
@@ -33,4 +34,13 @@ func (ufs UploadFileService) AbortMultipartUpload(filePathName string, uploadId 
 	}
 
 	return nil
+}
+
+func (ufs UploadFileService) CompleteMultipartUpload(completedMultipartInput domain.MultipartCompletedInput) (string, error) {
+	cr, err := ufs.repository.CompleteMultipartUpload(completedMultipartInput)
+	if err != nil {
+		return "", err
+	}
+
+	return cr, nil
 }

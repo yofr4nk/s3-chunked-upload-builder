@@ -66,3 +66,38 @@ func (storage *UploadStorage) AbortMultipartUpload(filePathName string, uploadId
 
 	return nil
 }
+
+func (storage *UploadStorage) CompleteMultipartUpload(cmi domain.MultipartCompletedInput) (string, error) {
+	svc := s3.New(storage.session)
+
+	completedMultipartUploadInput := &s3.CompleteMultipartUploadInput{
+		Bucket:   aws.String(storage.bucket),
+		Key:      aws.String(cmi.KeyPath),
+		UploadId: aws.String(cmi.UploadId),
+		MultipartUpload: &s3.CompletedMultipartUpload{
+			Parts: fillCompletedParts(cmi.CompletedParts),
+		},
+	}
+
+	completeResponse, err := svc.CompleteMultipartUpload(completedMultipartUploadInput)
+	if err != nil {
+		return "", err
+	}
+
+	return completeResponse.String(), nil
+}
+
+func fillCompletedParts(completedParts domain.CompletedParts) []*s3.CompletedPart {
+	var cParts []*s3.CompletedPart
+
+	for i := 0; i < len(completedParts); i++ {
+		cp := s3.CompletedPart{
+			ETag:       &completedParts[i].ETag,
+			PartNumber: &completedParts[i].PartNumber,
+		}
+
+		cParts = append(cParts, &cp)
+	}
+
+	return cParts
+}

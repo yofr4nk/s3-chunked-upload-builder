@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-type AboutMultipartBody struct {
+type abortMultipartBody struct {
 	KeyPath  string `json:"keyPath"`
 	UploadId string `json:"uploadId"`
 }
@@ -16,7 +16,7 @@ func AbortMultipartUpload(abortMultipartUpload abortMultipartUpload) http.Handle
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-type", "application/json")
 
-		var amp AboutMultipartBody
+		var amp abortMultipartBody
 		err := json.NewDecoder(r.Body).Decode(&amp)
 		if err != nil {
 			http.Error(w, "Invalid payload received "+err.Error(), 400)

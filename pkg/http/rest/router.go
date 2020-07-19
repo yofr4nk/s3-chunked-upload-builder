@@ -20,6 +20,7 @@ func RouterHandler(ufs *uploading.UploadFileService) http.Handler {
 
 	router.HandleFunc("/get-multipart-upload", handlers.CreateMultipartUpload(ufs.CreateMultipartUpload)).Methods("POST")
 	router.HandleFunc("/abort-multipart-upload", handlers.AbortMultipartUpload(ufs.AbortMultipartUpload)).Methods("POST")
+	router.HandleFunc("/complete-multipart-upload", handlers.CompleteMultipartUpload(ufs.CompleteMultipartUpload)).Methods("POST")
 
 	handler := cors.AllowAll().Handler(router)
 
