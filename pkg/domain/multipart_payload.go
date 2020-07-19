@@ -18,3 +18,10 @@ type CompletedPart struct {
 }
 
 type CompletedParts []CompletedPart
+
+type UploadSign struct {
+	KeyPath    string `json:"keyPath"`
+	PartNumber string `json:"partNumber"`
+	UploadId   string `json:"uploadId"`
+	ContentMD5 string `json:"contentMD5"`
+}
